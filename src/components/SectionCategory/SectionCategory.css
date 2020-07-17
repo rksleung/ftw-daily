@@ -1,0 +1,196 @@
+@import '../../marketplace.css';
+
+.title {
+  @apply --marketplaceH1FontStyles;
+  margin-top: 0;
+}
+
+.locations {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  @media (--viewportMedium) {
+    flex-direction: row;
+    margin-top: 17px;
+  }
+}
+
+.location {
+  width: 100%;
+  margin-top: 25px;
+  background-color: rgba(40, 39, 39, 0.34);
+
+  /* Remove link's hover effect */
+  &:hover {
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+  }
+}
+
+.location {
+  @media (--viewportMedium) {
+    margin-right: 17px;
+    margin-bottom: 0;
+  }
+}
+
+.location:last-of-type {
+  @media (--viewportMedium) {
+    margin-right: 0;
+  }
+}
+
+/* A wrapper for a responsive image that holds it's aspect ratio */
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 4px;
+  transition: var(--transitionStyleButton);
+  text-align: center;
+  color: white;
+  background-color: rgba(40, 39, 39, 1);
+ 
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: var(--boxShadowSectionLocationHover);
+  }
+}
+
+/* An image wrapper that defines the images aspect ratio */
+.aspectWrapper {
+  padding-bottom: calc(6 / 13 * 100%); /* 13:6 Aspect Ratio */
+
+  @media (--viewportMedium) {
+    padding-bottom: calc(2 / 3 * 100%); /* 3:2 Aspect Ratio */
+  }
+}
+
+.locationImage {
+  /* Layout - image will take space defined by aspect ratio wrapper */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.text_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  color: white;
+
+  transform: translate(-50%, -50%);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+
+  @media (--viewportMedium) {
+    flex-direction: row;
+  }
+}
+
+.row {
+  display: flex;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-direction: row;
+  height: 100%;
+}
+
+.columnwide {
+  @media (--viewportMedium) {
+    width: 66.66667%;
+    margin-right: 40px;
+    height: calc(50% - 2.5px);
+  }
+}
+
+.columnnarrow {
+  @media (--viewportMedium) {
+    width: 33.33333%;
+    margin-right: 40px;
+    height: calc(33.33333% - 3.33333px);
+  }
+}
+
+.layout5 {
+  height: 860px;
+}
+
+.block {
+  position: relative;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: calc(50% - 2.5px);
+}
+
+.block1 {
+  color: #ffffff;
+  background-color: transparent;
+  background-image: url(../../assets/AdobeStock_85242588_6e65c381-bd40-4537-a3b3-208c28d4c246_1024x1024.jpeg);
+}
+
+.block2 {
+  color: #ffffff;
+  background-color: transparent;
+  background-image: url(../../assets/AdobeStock_84417253_b0a33943-676c-4ff5-85a7-7b01d60030c9_1024x1024.jpeg);
+}
+
+.block3 {
+  color: #ffffff;
+  background-color: transparent;
+  background-image: url(../../assets/AdobeStock_127710899_4dd63d0d-32ea-4fd1-82f8-f6d626abf555_1024x1024.jpeg);
+}
+
+.block4 {
+  color: #ffffff;
+  background-color: transparent;
+  background-image: url(../../assets/AdobeStock_177826858_1024x1024.jpeg);
+}
+
+.block5 {
+  color: #ffffff;
+  background-color: transparent;
+  background-image: url(../../assets/AdobeStock_105890066_1db88452-62f0-4011-91b2-84f32aeaf8cc_1024x1024.jpeg);
+}
+
+.step:last-of-type {
+  @media (--viewportMedium) {
+    margin-right: 0;
+  }
+}
+
+.stepTitle {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  @media (--viewportMedium) {
+    margin-top: 21px;
+    margin-bottom: 18px;
+  }
+}
+
+.createListingLink {
+  margin-top: 36px;
+
+  @media (--viewportMedium) {
+    margin-top: 52px;
+  }
+}

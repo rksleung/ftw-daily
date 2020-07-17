@@ -23,7 +23,7 @@
   --backgroundImage: {
     /* Gradient direction and overlaying the black color on top of the image for better readability */
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-      url('//cdn.shopify.com/s/files/1/2999/4420/files/WhatsApp_Image_2018-09-26_at_10.49.46_AM_ede17a43-bc1b-42a1-bb8c-67a1b528e4dd_1800x1000.jpeg?v=1537984426');
+      url('../../assets/sharehero_background1.jpg');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
