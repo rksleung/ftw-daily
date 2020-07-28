@@ -14,6 +14,7 @@ import {
   LINE_ITEM_DAY,
   LINE_ITEM_NIGHT,
   LINE_ITEM_UNITS,
+  LINE_ITEM_WEEK,
   DATE_TYPE_DATE,
   DATE_TYPE_DATETIME,
 } from '../../util/types';
@@ -510,6 +511,33 @@ export const UnitsType = {
       lineItems: [
         {
           code: 'line-item/units',
+          includeFor: ['customer', 'provider'],
+          quantity: new Decimal(2),
+          unitPrice: new Money(4500, CURRENCY),
+          lineTotal: new Money(9000, CURRENCY),
+          reversal: false,
+        },
+      ],
+    }),
+    booking: exampleBooking({
+      start: new Date(Date.UTC(2017, 3, 14)),
+      end: new Date(Date.UTC(2017, 3, 18)),
+    }),
+  },
+};
+
+export const WeekType = {
+  component: BookingBreakdown,
+  props: {
+    userRole: 'customer',
+    unitType: LINE_ITEM_WEEK,
+    dateType: DATE_TYPE_DATETIME,
+    transaction: exampleTransaction({
+      payinTotal: new Money(9000, CURRENCY),
+      payoutTotal: new Money(9000, CURRENCY),
+      lineItems: [
+        {
+          code: 'line-item/week',
           includeFor: ['customer', 'provider'],
           quantity: new Decimal(2),
           unitPrice: new Money(4500, CURRENCY),

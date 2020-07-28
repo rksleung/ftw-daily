@@ -12,6 +12,7 @@ const SectionHeading = props => {
     formattedPrice,
     richTitle,
     category,
+    manufacturer,
     hostLink,
     showContactUser,
     onContactUser,
@@ -40,7 +41,8 @@ const SectionHeading = props => {
       <div className={css.heading}>
         <h1 className={css.title}>{richTitle}</h1>
         <div className={css.author}>
-          {category}
+          <FormattedMessage id="ListingPage.manufacturedBy" values={{manufacturer}} />
+          {category === '' ? '' : <span> <span className={css.separator}>•</span> {category} </span> }
           <FormattedMessage id="ListingPage.hostedBy" values={{ name: hostLink }} />
           {showContactUser ? (
             <span className={css.contactWrapper}>

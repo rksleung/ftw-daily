@@ -3,7 +3,7 @@ import { string, func } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
-import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
+import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes, LINE_ITEM_WEEK } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { ensureListing, ensureUser } from '../../util/data';
 import { richText } from '../../util/richText';
@@ -58,11 +58,14 @@ export const ListingCardComponent = props => {
   const unitType = config.bookingUnitType;
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
+  const isWeekly = unitType === LINE_ITEM_WEEK;
 
   const unitTranslationKey = isNightly
     ? 'ListingCard.perNight'
     : isDaily
     ? 'ListingCard.perDay'
+    : isWeekly
+    ? 'ListingCard.perWeek'
     : 'ListingCard.perUnit';
 
   return (

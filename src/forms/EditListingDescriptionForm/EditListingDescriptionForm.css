@@ -50,6 +50,11 @@
 }
 
 .category {
+  display: none;
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
+.manufacturer {
   @apply --EditListingDescriptionForm_formMargins;
 }
 

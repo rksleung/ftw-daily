@@ -57,6 +57,10 @@ const EditListingDescriptionFormComponent = props => (
         id: 'EditListingDescriptionForm.descriptionRequired',
       });
 
+      const manufacturerMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.manufacturer',
+      });
+
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
@@ -112,8 +116,17 @@ const EditListingDescriptionFormComponent = props => (
           <CustomCategorySelectFieldMaybe
             id="category"
             name="category"
+            disabled="true"
             categories={categories}
             intl={intl}
+          />
+
+          <FieldTextInput
+            id="manufacturer"
+            name="manufacturer"
+            className={css.manufacturer}
+            type="text"
+            label={manufacturerMessage}
           />
 
           <Button

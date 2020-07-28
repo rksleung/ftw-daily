@@ -379,6 +379,7 @@ export class ListingPageComponent extends Component {
           <span className={css.separator}>•</span>
         </span>
       ) : null;
+    const manufacturer = publicData && publicData.manufacturer ? publicData.manufacturer : null;
 
     return (
       <Page
@@ -424,6 +425,7 @@ export class ListingPageComponent extends Component {
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
                     category={category}
+                    manufacturer={manufacturer}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}

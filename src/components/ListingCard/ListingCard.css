@@ -38,6 +38,7 @@
   left: 0;
   right: 0;
   width: 100%;
+  object-fit: contain;
   border-radius: var(--borderRadius);
 }
 
@@ -114,6 +115,7 @@
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
+  display: none;
 
   @media (--viewportMedium) {
     margin-top: 0;
