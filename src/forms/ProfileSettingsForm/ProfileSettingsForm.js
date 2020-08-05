@@ -89,6 +89,10 @@ class ProfileSettingsFormComponent extends Component {
           });
           const lastNameRequired = validators.required(lastNameRequiredMessage);
 
+          const usernameValidMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.userNameValid',
+          });
+          const userNameValidated = validators.usernameValid(usernameValidMessage);
           // Bio
           const bioLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.bioLabel',
@@ -274,6 +278,21 @@ class ProfileSettingsFormComponent extends Component {
                     label={lastNameLabel}
                     placeholder={lastNamePlaceholder}
                     validate={lastNameRequired}
+                  />
+                </div>
+              </div>
+              <div className={css.sectionContainer}>
+                <h3 className={css.sectionTitle}>
+                  <FormattedMessage id="ProfileSettingsForm.username" />
+                </h3>
+                <div className={css.nameContainer}>
+                  <FieldTextInput
+                    className={css.firstName}
+                    type="text"
+                    id="username"
+                    name="username"
+                    label=""
+                    validate={userNameValidated}
                   />
                 </div>
               </div>

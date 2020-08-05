@@ -74,6 +74,26 @@
   white-space: nowrap;
 }
 
+.mapToggleWrapper {
+  @apply --marketplaceH4FontStyles;
+  width: 200px;
+  line-height: 20px;
+  margin-top: 0px;
+  margin-bottom: 11px;
+  margin-left: auto;
+  margin-right: 8px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.showMap {
+  white-space: nowrap;
+}
+
+.checkboxToggle {
+  width: 20px;
+}
+
 .searchFiltersPanelClosed {
   @apply --marketplaceButtonStylesSecondary;
   @apply --marketplaceSearchFilterLabelFontStyles;

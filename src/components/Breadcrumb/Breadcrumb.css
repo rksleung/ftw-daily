@@ -1,0 +1,15 @@
+@import '../../marketplace.css';
+
+.root {
+    display: inline;
+}
+
+.li:not(:last-child) {
+    margin-right: 7px;
+}
+
+/* Show a separator character between items */
+.li:not(:last-child):after {
+    content: '›';
+    margin-left: 7px;
+}

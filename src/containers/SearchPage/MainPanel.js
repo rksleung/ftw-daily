@@ -156,6 +156,8 @@ class MainPanel extends Component {
       onOpenModal,
       onCloseModal,
       onMapIconClick,
+      isMapOpen,
+      toggleMapOpen,
       pagination,
       searchParamsForPagination,
       showAsModalMaxWidth,
@@ -229,6 +231,8 @@ class MainPanel extends Component {
           resultsCount={totalItems}
           searchInProgress={searchInProgress}
           searchListingsError={searchListingsError}
+          isMapOpen={isMapOpen}
+          toggleMapOpen={toggleMapOpen}
           {...propsForSecondaryFiltersToggle}
         >
           {primaryFilters.map(config => {
@@ -352,6 +356,8 @@ MainPanel.propTypes = {
   onOpenModal: func.isRequired,
   onCloseModal: func.isRequired,
   onMapIconClick: func.isRequired,
+  isMapOpen: bool.isRequired,
+  toggleMapOpen: func.isRequired,
   pagination: propTypes.pagination,
   searchParamsForPagination: object,
   showAsModalMaxWidth: number.isRequired,

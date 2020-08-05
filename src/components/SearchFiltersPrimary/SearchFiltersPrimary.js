@@ -14,6 +14,8 @@ const SearchFiltersPrimaryComponent = props => {
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
+    isMapOpen,
+    toggleMapOpen,
     isSecondaryFiltersOpen,
     toggleSecondaryFiltersOpen,
     selectedSecondaryFiltersCount,
@@ -21,6 +23,7 @@ const SearchFiltersPrimaryComponent = props => {
 
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, className);
+  const state = { isMapOpen: isMapOpen };
 
   const toggleSecondaryFiltersOpenButtonClasses =
     isSecondaryFiltersOpen || selectedSecondaryFiltersCount > 0
@@ -39,6 +42,18 @@ const SearchFiltersPrimaryComponent = props => {
       />
     </button>
   ) : null;
+  const toggleMapOpenButtonClasses =
+    state.isMapOpen ? css.searchFiltersPanelOpen : css.searchFiltersPanelClosed;  
+  const toggleMapOpenButton = (
+    <button
+      className={toggleMapOpenButtonClasses}
+      onClick={() => {
+        toggleMapOpen(!isMapOpen);
+      }}
+    >
+      <FormattedMessage id="SearchFiltersPrimary.showMap" />
+    </button>
+  );
 
   return (
     <div className={classes}>
@@ -54,7 +69,11 @@ const SearchFiltersPrimaryComponent = props => {
           </div>
         ) : null}
         {sortByComponent}
+        <div className={css.mapToggleWrapper}>
+          {toggleMapOpenButton}
+        </div>
       </div>
+
 
       <div className={css.filters}>
         {children}
@@ -81,6 +100,8 @@ SearchFiltersPrimaryComponent.defaultProps = {
   className: null,
   resultsCount: null,
   searchInProgress: false,
+  isMapOpen: false,
+  toggleMapOpen: null,
   isSecondaryFiltersOpen: false,
   toggleSecondaryFiltersOpen: null,
   selectedSecondaryFiltersCount: 0,
@@ -93,6 +114,8 @@ SearchFiltersPrimaryComponent.propTypes = {
   listingsAreLoaded: bool.isRequired,
   resultsCount: number,
   searchInProgress: bool,
+  isMapOpen: bool,
+  toggleMapOpen: func,
   isSecondaryFiltersOpen: bool,
   toggleSecondaryFiltersOpen: func,
   selectedSecondaryFiltersCount: number,

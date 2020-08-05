@@ -1,6 +1,7 @@
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
+import * as fs from 'fs';
 
 // ================ Action types ================ //
 

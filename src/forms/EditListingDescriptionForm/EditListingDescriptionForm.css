@@ -50,7 +50,6 @@
 }
 
 .category {
-  display: none;
   @apply --EditListingDescriptionForm_formMargins;
 }
 

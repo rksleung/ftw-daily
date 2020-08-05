@@ -121,6 +121,11 @@
   flex-grow: 1;
 }
 
+
+.mapPanelNoShow {
+  display: none;
+}
+
 .mapPanel {
   @media (--viewportMedium) {
     /**

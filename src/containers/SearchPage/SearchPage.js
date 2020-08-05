@@ -41,6 +41,7 @@ export class SearchPageComponent extends Component {
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
+      isMapOpen: false,
     };
 
     this.searchMapListingsInProgress = false;
@@ -143,12 +144,20 @@ export class SearchPageComponent extends Component {
     const isWindowDefined = typeof window !== 'undefined';
     const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
     const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
+      (!isMobileLayout && this.state.isMapOpen) || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
 
     const onMapIconClick = () => {
       this.useLocationSearchBounds = true;
       this.setState({ isSearchMapOpenOnMobile: true });
     };
+    const propsForMapToggle = {
+      isMapOpen: this.state.isMapOpen,
+      toggleMapOpen: isOpen => {
+        this.setState({ isMapOpen: isOpen });
+      }
+    };
+    const toggleMapOpenButtonClasses =
+    (!isMobileLayout && !this.state.isMapOpen) ? css.mapPanelNoShow : css.mapPanel; 
 
     const { address, bounds, origin } = searchInURL || {};
     const { title, description, schema } = createSearchResultSchema(listings, address, intl);
@@ -190,9 +199,10 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
+            {...propsForMapToggle}
           />
           <ModalInMobile
-            className={css.mapPanel}
+            className={toggleMapOpenButtonClasses}
             id="SearchPage.map"
             isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
             onClose={() => this.setState({ isSearchMapOpenOnMobile: false })}

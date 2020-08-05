@@ -1,6 +1,7 @@
 import React from 'react';
 import { required } from '../../util/validators';
 import { FieldSelect } from '../../components';
+import { FormattedMessage } from '../../util/reactIntl';
 
 import css from './EditListingDescriptionForm.css';
 
@@ -30,7 +31,7 @@ const CustomCategorySelectFieldMaybe = props => {
       </option>
       {categories.map(c => (
         <option key={c.key} value={c.key}>
-          {c.label}
+          {intl.formatMessage({id: c.label})}
         </option>
       ))}
     </FieldSelect>

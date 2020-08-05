@@ -1,26 +1,30 @@
 import React from 'react';
-import styled from 'styled-components';
+//import styled from 'styled-components';
+import classNames from 'classnames';
 import { StaticQuery, graphql, withPrefix } from 'gatsby';
+import { NamedLink } from '../../components';
 
-import { baselineBreakpoint } from '../config';
-import { Ol, Li, Link } from '../components';
+import css from './Breadcrumb.css';
+
+//import { baselineBreakpoint } from '../config';
+//import { Ol, Li, Link } from '../components';
 
 // NOTE: custom font size
-const Item = styled(Li)`
-`;
+//const Item = styled(Li)`
+//`;
 
 const CrumbLi = props => {
-  const { path, label } = props;
+  const { path, label, linkProps } = props;
   return (
-    <Item>
+    <li>
       {path ? (
-        <Link neutral to={path}>
+        <NamedLink {...linkProps}>
           {label}
-        </Link>
+        </NamedLink>        
       ) : (
         label
       )}
-    </Item>
+    </li>
   );
 };
 
@@ -35,7 +39,8 @@ const query = graphql`
 `;
 
 const Breadcrumb = props => {
-  const { links, ...rest } = props;
+  const { className, rootClassName, links, ...rest } = props;
+  const classes = classNames(rootClassName || css.root, className);
   return (
     <StaticQuery
       query={query}
@@ -61,11 +66,11 @@ const Breadcrumb = props => {
 
         return (
           <nav {...rest}>
-            <Ol>
+            <ol>
               {links.map(link => (
                 <CrumbLi key={link.label} {...link} />
               ))}
-            </Ol>
+            </ol>
             <script type="application/ld+json">{ldJson}</script>
           </nav>
         );

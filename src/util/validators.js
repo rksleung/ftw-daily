@@ -110,6 +110,14 @@ export const emailFormatValid = message => value => {
   return value && EMAIL_RE.test(value) ? VALID : message;
 };
 
+const USERNAME_RE = /^[a-z0-9._]+$/;
+export const usernameValid = message => value => {
+  if (!value) {
+    return VALID;
+  }
+  return value && USERNAME_RE.test(value) ? VALID: message;
+};
+
 export const moneySubUnitAmountAtLeast = (message, minValue) => value => {
   return value instanceof Money && value.amount >= minValue ? VALID : message;
 };

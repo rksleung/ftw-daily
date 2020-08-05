@@ -85,10 +85,13 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'smoke', label: 'Smoke' },
-        { key: 'electric', label: 'Electric' },
-        { key: 'wood', label: 'Wood' },
-        { key: 'other', label: 'Other' },
+        { key: 'cooking-hobbies', label: 'Category.cooking-hobbies' },
+        { key: 'electronics', label: 'Category.electronics' },
+        { key: 'gatherings', label: 'Category.gatherings' },
+        { key: 'home-care', label: 'Category.home-care' },
+        { key: 'kids-things', label: 'Category.kids-things' },
+        { key: 'outdoor-gear', label: 'Category.outdoor-gear' },
+        { key: 'travel-essentials', label: 'Category.travel-essentials' },
       ],
     },
   },

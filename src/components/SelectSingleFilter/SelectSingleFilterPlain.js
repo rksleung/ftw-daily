@@ -91,7 +91,7 @@ class SelectSingleFilterPlain extends Component {
                 onClick={() => this.selectOption(option.key)}
               >
                 <span className={optionBorderClass} />
-                {option.label}
+                <FormattedMessage id={option.label} />
               </button>
             );
           })}
