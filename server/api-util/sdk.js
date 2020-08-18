@@ -2,9 +2,12 @@ const http = require('http');
 const https = require('https');
 const Decimal = require('decimal.js');
 const sharetribeSdk = require('sharetribe-flex-sdk');
+const integrationSdk = require('sharetribe-flex-integration-sdk');
 
 const CLIENT_ID = process.env.REACT_APP_SHARETRIBE_SDK_CLIENT_ID;
 const CLIENT_SECRET = process.env.SHARETRIBE_SDK_CLIENT_SECRET;
+const CLIENT_ID_INTEGRATION = process.env.REACT_APP_SHARETRIBE_SDK_CLIENT_ID_INTEGRATION;
+const CLIENT_SECRET_INTEGRATION = process.env.SHARETRIBE_SDK_CLIENT_SECRET_INTEGRATION;
 const USING_SSL = process.env.REACT_APP_SHARETRIBE_USING_SSL === 'true';
 const TRANSIT_VERBOSE = process.env.REACT_APP_SHARETRIBE_SDK_TRANSIT_VERBOSE === 'true';
 
@@ -124,5 +127,23 @@ exports.getTrustedSdk = req => {
       typeHandlers,
       ...baseUrlMaybe,
     });
+  });
+};
+
+exports.getIntegrationSdk = (req, res) => {
+  return integrationSdk.createInstance({
+//    transitVerbose: TRANSIT_VERBOSE,
+    clientId: CLIENT_ID_INTEGRATION,
+    clientSecret: CLIENT_SECRET_INTEGRATION,
+//    httpAgent,
+//    httpsAgent,
+/*    tokenStore: integrationSdk.tokenStore.expressCookieStore({
+      clientId: CLIENT_ID,
+      req,
+      res,
+      secure: USING_SSL,
+    }),*/
+//    typeHandlers,
+    ...baseUrlMaybe,
   });
 };

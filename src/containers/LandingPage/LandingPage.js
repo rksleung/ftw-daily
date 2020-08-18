@@ -10,7 +10,7 @@ import {
   Page,
   SectionHero,
   SectionHowItWorks,
-  SectionLocations,
+ // SectionLocations,
   SectionCategory,
   LayoutSingleColumn,
   LayoutWrapperTopbar,

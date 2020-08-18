@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '../../util/reactIntl';
+//import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
@@ -26,7 +26,7 @@ class LocationImage extends Component {
 const LazyImage = lazyLoadWithDimensions(LocationImage);
 
 const locationLink = (name, image, searchQuery) => {
-  const nameText = <span className={css.locationName}>{name}</span>;
+//  const nameText = <span className={css.locationName}>{name}</span>;
   return (
     <NamedLink name="SearchPage" to={{ search: searchQuery }} className={css.location}>
       <div className={css.imageWrapper}>

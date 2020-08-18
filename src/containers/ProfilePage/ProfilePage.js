@@ -25,7 +25,7 @@ import {
   ButtonTabNavHorizontal,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
-import { loadData } from './ProfilePage.duck';
+import { loadData, loadUsernameData } from './ProfilePage.duck';
 import config from '../../config';
 
 import css from './ProfilePage.css';
@@ -322,6 +322,12 @@ const ProfilePage = compose(
 ProfilePage.loadData = params => {
   const id = new UUID(params.id);
   return loadData(id);
+};
+
+ProfilePage.loadUsernameData = params => {
+//  return getUserid(params.username).then( value => {
+    return loadUsernameData(params.username);
+//  });
 };
 
 export default ProfilePage;

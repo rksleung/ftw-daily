@@ -68,6 +68,37 @@ const post = (path, body) => {
     });
 };
 
+const get = (path) => {
+  const url = `${apiBaseUrl()}${path}`;
+  const options = {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return window
+    .fetch(url, options)
+    .then(res => {
+      if (res.status >= 400) {
+        const e = new Error('Local API request failed');
+        e.apiResponse = res;
+        throw e;
+      }
+      return res;
+    })
+    .then(res => {
+      const contentTypeHeader = res.headers.get('Content-Type');
+      const contentType = contentTypeHeader ? contentTypeHeader.split(';')[0] : null;
+      if (contentType === 'application/json') {
+        return res.text().then(deserialize);
+      } else if (contentType === 'application/json') {
+        return res.json();
+      }
+      return res.text();
+    });
+};
+
 // Fetch transaction line items from the local API endpoint.
 //
 // See `server/api/transaction-line-items.js` to see what data should
@@ -99,3 +130,8 @@ export const initiatePrivileged = body => {
 export const transitionPrivileged = body => {
   return post('/api/transition-privileged', body);
 };
+
+// Server side query to retrieve userid from username
+export const getUserid = (username) => {
+  return get(`/api/get-userid?username=${username}`);
+}

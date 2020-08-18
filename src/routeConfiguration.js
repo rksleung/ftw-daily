@@ -159,10 +159,15 @@ const routeConfiguration = () => {
       loadData: ProfilePage.loadData,
     },
     {
+      path: '/n',
+      name: 'ProfileBasePage',
+      component: RedirectToLandingPage,
+    },
+    {
       path: '/n/:username',
       name: 'ProfilePage',
       component: props => <ProfilePage {...props} />,
-      loadData: ProfilePage.loadData,
+      loadData: ProfilePage.loadUsernameData,
     },
     {
       path: '/profile-settings',

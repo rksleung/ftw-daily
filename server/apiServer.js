@@ -26,5 +26,6 @@ app.use(cookieParser());
 app.use('/api', apiRouter);
 
 app.listen(PORT, () => {
+  console.log(`REACT APP ROOT URL: ${process.env.REACT_APP_CANONICAL_ROOT_URL}`);
   console.log(`API server listening on ${PORT}`);
 });

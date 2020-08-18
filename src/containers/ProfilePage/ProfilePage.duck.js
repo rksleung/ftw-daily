@@ -2,6 +2,7 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUser } from '../../ducks/user.duck';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
+import { getUserid } from '../../util/api';
 
 // ================ Action types ================ //
 
@@ -181,4 +182,20 @@ export const loadData = userId => (dispatch, getState, sdk) => {
     dispatch(queryUserListings(userId)),
     dispatch(queryUserReviews(userId)),
   ]);
+};
+
+export const loadUsernameData = username => (dispatch, getState, sdk) => {
+  // Clear state so that previously loaded data is not visible
+  // in case this page load fails.
+  dispatch(setInitialState());
+
+  return getUserid(username).then( value => {
+    return Promise.all([
+      dispatch(fetchCurrentUser()),
+      dispatch(showUser(value.userid)),
+      dispatch(queryUserListings(value.userid)),
+      dispatch(queryUserReviews(value.userid)),
+    ])
+  })
+  .catch(e => dispatch(showUserError(storableError(e))));
 };
