@@ -12,7 +12,7 @@ const apiBaseUrl = () => {
   }
 
   // Otherwise, use the same domain and port as the frontend
-  return `${window.location.origin}`;
+  return window.location.origin;
 };
 
 // Application type handlers for JS SDK.
@@ -90,7 +90,7 @@ const get = (path) => {
     .then(res => {
       const contentTypeHeader = res.headers.get('Content-Type');
       const contentType = contentTypeHeader ? contentTypeHeader.split(';')[0] : null;
-      if (contentType === 'application/json') {
+      if (contentType === 'application/json') { 
         return res.text().then(deserialize);
       } else if (contentType === 'application/json') {
         return res.json();
