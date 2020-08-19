@@ -1,11 +1,6 @@
 import { types as sdkTypes, transit } from './sdkLoader';
 import config from '../config';
 import Decimal from 'decimal.js';
-//require('browser-env')(['window']);
-//const Window = require('window');
-//const window = new Window();
-//import fetch from 'node-fetch';
-//import https from 'https';
 import axios from 'axios';
 
 const apiBaseUrl = () => {
@@ -100,14 +95,6 @@ const get = (path) => {
       return res;
     })
     .then(res => {
-      /*const contentTypeHeader = res.headers.get('Content-Type');
-      const contentType = contentTypeHeader ? contentTypeHeader.split(';')[0] : null;
-      if (contentType === 'application+transit/json') {
-        return res.text().then( deserialize );
-      } else if (contentType === 'application/json') {
-        return res.json();
-      }
-      return res.text();*/
       return res.data;
     });
 };
