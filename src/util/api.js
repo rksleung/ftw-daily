@@ -1,6 +1,12 @@
 import { types as sdkTypes, transit } from './sdkLoader';
 import config from '../config';
 import Decimal from 'decimal.js';
+//require('browser-env')(['window']);
+//const Window = require('window');
+//const window = new Window();
+//import fetch from 'node-fetch';
+//import https from 'https';
+import axios from 'axios';
 
 const apiBaseUrl = () => {
   const port = process.env.REACT_APP_DEV_API_SERVER_PORT;
@@ -13,7 +19,7 @@ const apiBaseUrl = () => {
 
   // Otherwise, use the same domain and port as the frontend
   //return `${window.location.origin}`;
-  return `https://sharehero.herokuapp.com`;
+  return `${process.env.REACT_APP_CANONICAL_ROOT_URL}`;
 };
 
 // Application type handlers for JS SDK.
@@ -78,8 +84,13 @@ const get = (path) => {
       'Content-Type': 'application/json',
     },
   };
-  return window
-    .fetch(url, options)
+//  return window.fetch(url, options)
+  const req = {
+    url,
+    ...options,
+  };
+  console.log(req.url);
+  return axios.request(req)
     .then(res => {
       if (res.status >= 400) {
         const e = new Error('Local API request failed');
@@ -89,14 +100,15 @@ const get = (path) => {
       return res;
     })
     .then(res => {
-      const contentTypeHeader = res.headers.get('Content-Type');
+      /*const contentTypeHeader = res.headers.get('Content-Type');
       const contentType = contentTypeHeader ? contentTypeHeader.split(';')[0] : null;
-      if (contentType === 'application/json') {
-        return res.text().then(deserialize);
+      if (contentType === 'application+transit/json') {
+        return res.text().then( deserialize );
       } else if (contentType === 'application/json') {
         return res.json();
       }
-      return res.text();
+      return res.text();*/
+      return res.data;
     });
 };
 

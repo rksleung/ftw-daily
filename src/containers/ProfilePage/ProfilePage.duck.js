@@ -3,6 +3,8 @@ import { fetchCurrentUser } from '../../ducks/user.duck';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { getUserid } from '../../util/api';
+import { types as sdkTypes } from '../../util/sdkLoader';
+const { UUID } = sdkTypes;
 
 // ================ Action types ================ //
 
@@ -190,11 +192,12 @@ export const loadUsernameData = username => (dispatch, getState, sdk) => {
   dispatch(setInitialState());
 
   return getUserid(username).then( value => {
+    const userId = new UUID(value.userid.uuid);
     return Promise.all([
       dispatch(fetchCurrentUser()),
-      dispatch(showUser(value.userid)),
-      dispatch(queryUserListings(value.userid)),
-      dispatch(queryUserReviews(value.userid)),
+      dispatch(showUser(userId)),
+      dispatch(queryUserListings(userId)),
+      dispatch(queryUserReviews(userId)),
     ])
   })
   .catch(e => dispatch(showUserError(storableError(e))));

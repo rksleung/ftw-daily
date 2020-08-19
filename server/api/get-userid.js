@@ -13,7 +13,7 @@ module.exports = (req, res) => {
     return res
       .status(200)
       .set('Content-Type', 'application/json')
-      .send(serialize({ username: username, userid: name_id[username] }))
+      .send({ username: username, userid: name_id[username] })
       .end();
   }
   const sdk = getIntegrationSdk(req, res);
@@ -33,7 +33,7 @@ module.exports = (req, res) => {
         return res
           .status(200)
           .set('Content-Type', 'application/json')
-          .send(serialize({ username: username, userid: name_id[username] }))
+          .send({ username: username, userid: name_id[username] })
           .end();
       } else {
         return res.status(400).send(`Invalid username: ${username}`);
