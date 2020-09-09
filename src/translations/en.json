@@ -232,6 +232,7 @@
   "EditListingTypePanel.title": "Listing Type",
   "EditListingTypeForm.categoryLabel": "Category Type",
   "EditListingTypeForm.categoryPlaceholder": "Choose the type…",
+  "EditListingTypeForm.categoryRequired": "Please choose a type",
   "EditListingWizard.payoutModalInfo": "Almost done! In order to send you money, we need to know a bit more about you. Next, we will guide you through verifying your account. The details can also be edited from Account Setting page on Payout details tab. ",
   "EditListingWizard.payoutModalTitleOneMoreThing": "One more thing:",
   "EditListingWizard.payoutModalTitlePayoutPreferences": "Payout preferences",

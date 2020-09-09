@@ -98,6 +98,9 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
+    scriptSrc: [
+      'www.geoplugin.net'
+    ]
   };
 
   // ================ END CUSTOM CSP URLs ================ //

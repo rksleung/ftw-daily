@@ -41,57 +41,67 @@ const locationLink = (name, image, searchQuery) => {
 };
 
 const SectionCategory = props => {
-  const { rootClassName, className } = props;
+  const { rootClassName, className, intl } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   var linkParam = `?address=Vancouver%2C%20Canada&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=49.30958735%2C-122.92065933`;
   if (config.geoLocation) {
     linkParam = `?address=${config.geoLocation.city}%2C%20${config.geoLocation.country}&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=${config.geoLocation.latitude}%2C${config.geoLocation.longitude}`;
   }
+  const filterId = 'category';
+  const filter = config.custom.filters.find(f => f.id === filterId);
+  const categoryTextArray = [];
+  if (filter && filter.config && filter.config.options) {
+    filter.config.options.map( o => {
+      const categoryText = intl.formatMessage({ id: o.label });
+      categoryTextArray[o.key] = categoryText;
+    }, categoryTextArray );
+  }
+  const linkParamCategory = category => `${linkParam}&${filter.queryParamNames[0]}=${category}`; 
   return (
     <div className={classes}>
 
       <div className={css.locations}>
         {locationLink(
-          'GATHERINGS',
+          categoryTextArray['gatherings'],
           categoryImage1,
-          linkParam,
+          linkParamCategory('gatherings'),
         )}
         {locationLink(
-          'KIDS THINGS',
+          categoryTextArray['kids-things'],
           categoryImage2,
-          linkParam,
+          linkParamCategory('kids-things'),
         )}
       </div>
       <div className={css.locations}>
         {locationLink(
-          'HOME CARE',
+          categoryTextArray['home-care'],
           categoryImage3,
-          linkParam,
+          linkParamCategory('home-care'),
         )}
         {locationLink(
-          'ELECTRONICS',
+          categoryTextArray['electronics'],
           categoryImage4,
-          linkParam,
+          linkParamCategory('electronics'),
         )}
       </div>
       <div className={css.locations}>
         {locationLink(
-          'TRAVEL ESSENTIALS',
+          categoryTextArray['travel-essentials'],
           categoryImage5,
-          linkParam,
+          linkParamCategory('travel-essentials'),
         )}
         {locationLink(
-          'COOKING & HOBBIES',
+          categoryTextArray['cooking-hobbies'],
           categoryImage6,
-          linkParam,
+          linkParamCategory('cooking-hobbies'),
         )}
       </div>
       <div className={css.locations}>
         {locationLink(
-          'OUTDOOR GEARS',
+          categoryTextArray['outdoor-gear'],
           categoryImage7,
-          linkParam,
+          linkParamCategory('outdoor-gear'),
         )}
       </div>
     </div>

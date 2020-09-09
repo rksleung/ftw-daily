@@ -110,7 +110,7 @@ if (typeof window !== 'undefined') {
     country: window.geoplugin_countryName(),
     latitude: window.geoplugin_latitude(),
     longitude: window.geoplugin_longitude(),
-  };
+  };  
   config.geoLocation = geoLocation;
 }
 
