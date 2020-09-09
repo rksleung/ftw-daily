@@ -104,6 +104,14 @@ if (typeof window !== 'undefined') {
       routeConfiguration: routeConfiguration(),
     };
   }
+
+  const geoLocation = {
+    city: window.geoplugin_city(),
+    country: window.geoplugin_countryName(),
+    latitude: window.geoplugin_latitude(),
+    longitude: window.geoplugin_longitude(),
+  };
+  config.geoLocation = geoLocation;
 }
 
 // Export the function for server side rendering.

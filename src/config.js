@@ -179,13 +179,6 @@ const maps = {
   },
 };
 
-const geoLocation = {
-  city: window.geoplugin_city(),
-  country: window.geoplugin_countryName(),
-  latitude: window.geoplugin_latitude(),
-  longitude: window.geoplugin_longitude(),
-};
-
 // NOTE: only expose configuration that should be visible in the
 // client side, don't add any server secrets in this file.
 const config = {
@@ -227,7 +220,6 @@ const config = {
   usingSSL,
   maps,
   custom,
-  geoLocation,
 };
 
 export default config;

@@ -11,8 +11,11 @@ const SectionHero = props => {
   const { rootClassName, className } = props;
 
   const classes = classNames(rootClassName || css.root, className);
-  const linkParam = `?address=${config.geoLocation.city}%2C%20${config.geoLocation.country}&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=${config.geoLocation.latitude}%2C${config.geoLocation.longitude}`;
 
+  var linkParam = `?address=Vancouver%2C%20Canada&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=49.30958735%2C-122.92065933`;
+  if (config.geoLocation) {
+    linkParam = `?address=${config.geoLocation.city}%2C%20${config.geoLocation.country}&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=${config.geoLocation.latitude}%2C${config.geoLocation.longitude}`;
+  }
   return (
     <div className={classes}>
       <div className={css.heroContent}>
