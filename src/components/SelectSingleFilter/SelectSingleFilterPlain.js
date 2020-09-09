@@ -42,6 +42,7 @@ class SelectSingleFilterPlain extends Component {
       initialValues,
       twoColumns,
       useBullets,
+      showOutline,
     } = this.props;
 
     const queryParamName = getQueryParamName(queryParamNames);

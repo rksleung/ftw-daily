@@ -5,11 +5,13 @@ import classNames from 'classnames';
 import { NamedLink } from '../../components';
 
 import css from './SectionHero.css';
+import config from '../../config';
 
 const SectionHero = props => {
   const { rootClassName, className } = props;
 
   const classes = classNames(rootClassName || css.root, className);
+  const linkParam = `?address=${config.geoLocation.city}%2C%20${config.geoLocation.country}&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=${config.geoLocation.latitude}%2C${config.geoLocation.longitude}`;
 
   return (
     <div className={classes}>
@@ -23,8 +25,7 @@ const SectionHero = props => {
         <NamedLink
           name="SearchPage"
           to={{
-            search:
-              'address=Finland&bounds=70.0922932%2C31.5870999%2C59.693623%2C20.456500199999937',
+            search: linkParam
           }}
           className={css.heroButton}
         >

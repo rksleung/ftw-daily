@@ -3,15 +3,15 @@ import { bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
-import { findOptionsForSelectFilter } from '../../util/search';
+import { findOptionsForSelectFilter, findParentForSelectOption } from '../../util/search';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '../../components';
-import { EditListingDescriptionForm } from '../../forms';
+import { EditListingTypeForm } from '../../forms';
 import config from '../../config';
 
-import css from './EditListingDescriptionPanel.css';
+import css from './EditListingTypePanel.css';
 
-const EditListingDescriptionPanel = props => {
+const EditListingTypePanel = props => {
   const {
     className,
     rootClassName,
@@ -23,6 +23,7 @@ const EditListingDescriptionPanel = props => {
     submitButtonText,
     panelUpdated,
     updateInProgress,
+    params,
     categoryType,
     errors,
   } = props;
@@ -34,53 +35,74 @@ const EditListingDescriptionPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id={`EditListingDescriptionPanel.title.${categoryType}`}
+      id="EditListingTypePanel.title"
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id={`EditListingDescriptionPanel.createListingTitle.${categoryType}`}
-    />
+    <FormattedMessage id="EditListingTypePanel.createListingTitle" />
   );
 
-  const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters, categoryType);
-  return (  
+  const getHandleChangedValueFn = useHistoryPush => {
+    /*const { urlQueryParams, history, filterConfig } = this.props;
+
+    return updatedURLParams => {
+      const updater = prevState => {
+        const mergedQueryParams = { ...urlQueryParams, ...prevState.currentQueryParams };
+        return { currentQueryParams: { ...mergedQueryParams, ...updatedURLParams } };
+      };
+
+      const callback = () => {
+        if (useHistoryPush) {
+          const searchParams = this.state.currentQueryParams;
+          const search = cleanSearchFromConflictingParams(searchParams, sortConfig, filterConfig);
+          history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, search));
+        }
+      };
+
+      this.setState(updater, callback);
+    };*/
+    return;
+  };
+
+  const filterId = 'category';
+  const filter = config.custom.filters.find(f => f.id === filterId);
+  const categoryHeaderOptions = findOptionsForSelectFilter(filterId, config.custom.filters, "");
+  return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingDescriptionForm
+      <EditListingTypeForm
         className={css.form}
-        initialValues={{ title, description, category: publicData.category, manufacturer: publicData.manufacturer }}
+        initialValues={{ category: categoryType }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category, manufacturer = [] } = values;
+          const { category } = values;
           const updateValues = {
-            title: title.trim(),
-            description,
-            publicData: { category, manufacturer },
+            categoryType: category,
           };
 
           onSubmit(updateValues);
         }}
+        queryParamNames={filter.queryParamNames}
         onChange={onChange}
         disabled={disabled}
         ready={ready}
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        categories={categoryOptions}
-        categoryType={categoryType}
+        categories={categoryHeaderOptions}
       />
     </div>
   );
 };
 
-EditListingDescriptionPanel.defaultProps = {
+EditListingTypePanel.defaultProps = {
   className: null,
   rootClassName: null,
   errors: null,
   listing: null,
 };
 
-EditListingDescriptionPanel.propTypes = {
+EditListingTypePanel.propTypes = {
   className: string,
   rootClassName: string,
 
@@ -97,4 +119,4 @@ EditListingDescriptionPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingDescriptionPanel;
+export default EditListingTypePanel;

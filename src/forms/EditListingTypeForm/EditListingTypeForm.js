@@ -5,16 +5,15 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { messageString } from '../../util/contextString';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, SelectSingleFilter, FieldTextInput } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 
-import css from './EditListingDescriptionForm.css';
+import css from './EditListingTypeForm.css';
 
 const TITLE_MAX_LENGTH = 60;
 
-const EditListingDescriptionFormComponent = props => (
+const EditListingTypeFormComponent = props => (
   <FinalForm
     {...props}
     render={formRenderProps => {
@@ -24,6 +23,7 @@ const EditListingDescriptionFormComponent = props => (
         disabled,
         ready,
         handleSubmit,
+        queryParamNames,
         intl,
         invalid,
         pristine,
@@ -31,28 +31,12 @@ const EditListingDescriptionFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
-        categoryType
       } = formRenderProps;
- 
-      const messageContext = messageString(categoryType);
-      const titleMessage = messageContext(intl, 'EditListingDescriptionForm.title');
-      const titlePlaceholderMessage = messageContext(intl, 'EditListingDescriptionForm.titlePlaceholder');
-      const titleRequiredMessage = messageContext(intl, 'EditListingDescriptionForm.titleRequired');
-      const maxLengthMessage = intl.formatMessage(
-        { id: 'EditListingDescriptionForm.maxLength' },
-        {
-          maxLength: TITLE_MAX_LENGTH,
-        }
-      );
 
-      const descriptionMessage = messageContext(intl, 'EditListingDescriptionForm.description');
-      const descriptionPlaceholderMessage = messageContext(intl, 'EditListingDescriptionForm.descriptionPlaceholder');
-      const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
-      const descriptionRequiredMessage = messageContext(intl, 'EditListingDescriptionForm.descriptionRequired');
-
-      const manufacturerMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.manufacturer',
-      });
+      const classes = classNames(css.root, className);
+      const submitReady = (updated && pristine) || ready;
+      const submitInProgress = updateInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
@@ -74,55 +58,18 @@ const EditListingDescriptionFormComponent = props => (
         </p>
       ) : null;
 
-      const classes = classNames(css.root, className);
-      const submitReady = (updated && pristine) || ready;
-      const submitInProgress = updateInProgress;
-      const submitDisabled = invalid || disabled || submitInProgress;
-
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
-          <FieldTextInput
-            id="title"
-            name="title"
-            className={css.title}
-            type="text"
-            label={titleMessage}
-            placeholder={titlePlaceholderMessage}
-            maxLength={TITLE_MAX_LENGTH}
-            validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
-            autoFocus
-          />
-
-          <FieldTextInput
-            id="description"
-            name="description"
-            className={css.description}
-            type="textarea"
-            label={descriptionMessage}
-            placeholder={descriptionPlaceholderMessage}
-            validate={composeValidators(required(descriptionRequiredMessage))}
-          />
-
           <CustomCategorySelectFieldMaybe
-            id="category"
+            id="categoryType"
             name="category"
             disabled="true"
             categories={categories}
             intl={intl}
-            categoryType={categoryType}
           />
-
-          <FieldTextInput
-            id="manufacturer"
-            name="manufacturer"
-            className={categoryType === "service" ? css.manufacturer_none : css.manufacturer }
-            type="text"
-            label={manufacturerMessage}
-          />
-
           <Button
             className={css.submitButton}
             type="submit"
@@ -138,9 +85,9 @@ const EditListingDescriptionFormComponent = props => (
   />
 );
 
-EditListingDescriptionFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingTypeFormComponent.defaultProps = { className: null, fetchErrors: null };
 
-EditListingDescriptionFormComponent.propTypes = {
+EditListingTypeFormComponent.propTypes = {
   className: string,
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
@@ -162,4 +109,4 @@ EditListingDescriptionFormComponent.propTypes = {
   ),
 };
 
-export default compose(injectIntl)(EditListingDescriptionFormComponent);
+export default compose(injectIntl)(EditListingTypeFormComponent);

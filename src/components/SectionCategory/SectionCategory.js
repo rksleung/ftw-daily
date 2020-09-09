@@ -8,6 +8,7 @@ import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { NamedLink } from '../../components';
 
 import css from './SectionCategory.css';
+import config from '../../config';
 
 import categoryImage1 from '../../assets/AdobeStock_85242588_6e65c381-bd40-4537-a3b3-208c28d4c246_1024x1024.jpeg';
 import categoryImage2 from '../../assets/AdobeStock_84417253_b0a33943-676c-4ff5-85a7-7b01d60030c9_1024x1024.jpeg';
@@ -43,7 +44,7 @@ const SectionCategory = props => {
   const { rootClassName, className } = props;
 
   const classes = classNames(rootClassName || css.root, className);
-
+  const linkParam = `?address=${config.geoLocation.city}%2C%20${config.geoLocation.country}&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=${config.geoLocation.latitude}%2C${config.geoLocation.longitude}`;
   return (
     <div className={classes}>
 
@@ -51,43 +52,43 @@ const SectionCategory = props => {
         {locationLink(
           'GATHERINGS',
           categoryImage1,
-          '?address=Vancouver%2C%20Canada&bounds=49.30958735%2C-122.92065933%2C49.0743493%2C-123.24180665&origin=49.30958735%2C-122.92065933'
+          linkParam,
         )}
         {locationLink(
           'KIDS THINGS',
           categoryImage2,
-          '?address=Rovaniemi%2C%20Finland&bounds=67.18452510000002%2C27.32667850000007%2C66.1553745%2C24.736871199999996&origin=66.50394779999999%2C25.729390599999988'
+          linkParam,
         )}
       </div>
       <div className={css.locations}>
         {locationLink(
           'HOME CARE',
           categoryImage3,
-          '?address=Ruka%2C%20Finland&bounds=66.1704578%2C29.14246849999995%2C66.1614402%2C29.110453699999994&origin=66.16594940000002%2C29.12646110000003'
+          linkParam,
         )}
         {locationLink(
           'ELECTRONICS',
           categoryImage4,
-          '?address=Ruka%2C%20Finland&bounds=66.1704578%2C29.14246849999995%2C66.1614402%2C29.110453699999994&origin=66.16594940000002%2C29.12646110000003'
+          linkParam,
         )}
       </div>
       <div className={css.locations}>
         {locationLink(
           'TRAVEL ESSENTIALS',
           categoryImage5,
-          '?address=Ruka%2C%20Finland&bounds=66.1704578%2C29.14246849999995%2C66.1614402%2C29.110453699999994&origin=66.16594940000002%2C29.12646110000003'
+          linkParam,
         )}
         {locationLink(
           'COOKING & HOBBIES',
           categoryImage6,
-          '?address=Ruka%2C%20Finland&bounds=66.1704578%2C29.14246849999995%2C66.1614402%2C29.110453699999994&origin=66.16594940000002%2C29.12646110000003'
+          linkParam,
         )}
       </div>
       <div className={css.locations}>
         {locationLink(
           'OUTDOOR GEARS',
           categoryImage7,
-          '?address=Ruka%2C%20Finland&bounds=66.1704578%2C29.14246849999995%2C66.1614402%2C29.110453699999994&origin=66.16594940000002%2C29.12646110000003'
+          linkParam,
         )}
       </div>
     </div>

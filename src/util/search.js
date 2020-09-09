@@ -37,7 +37,21 @@ export const isAnyFilterActive = (filterIds, urlQueryParams, filterConfigs) => {
 /**
  * Check if the filter is currently active.
  */
-export const findOptionsForSelectFilter = (filterId, filters) => {
+export const findOptionsForSelectFilter = (filterId, filters, hier_parent) => {
   const filter = filters.find(f => f.id === filterId);
-  return filter && filter.config && filter.config.options ? filter.config.options : [];
+  if ((hier_parent || hier_parent === "") && filter && filter.config && filter.config.options) {
+    const hier_nodes = filter.config.hierarchy.filter(f => f.parent === hier_parent);
+    return filter.config.options.filter(k => hier_nodes.find(f => f.id === k.key));
+  } else {
+    return filter && filter.config && filter.config.options ? filter.config.options : [];
+  }
+};
+
+export const findParentForSelectOption = (filterId, filters, optionId) => {
+  const filter = filters.find(f => f.id === filterId);
+  if (filter && filter.config && filter.config.options && filter.config.hierarchy) {
+    const option = filter.config.hierarchy.filter(f => f.id === optionId);
+    return option && option.length > 0 && option[0].parent ? option[0].parent : null;
+  }
+  return null;
 };

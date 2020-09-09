@@ -11,6 +11,7 @@ import {
   fetchStripeAccount,
 } from '../../ducks/stripeConnectAccount.duck';
 import { fetchCurrentUser } from '../../ducks/user.duck';
+import { LISTING_STATE_DRAFT } from '../../util/types';
 
 const { UUID } = sdkTypes;
 
@@ -500,7 +501,14 @@ export function requestCreateListingDraft(data) {
       expand: true,
       include: ['author', 'images'],
       'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    };
+    };/*
+    if (data.categoryType) {
+      const response = { data: { data: { ...data, 
+                                         type: "ownListing", 
+                                         id: new UUID("00000000-0000-0000-0000-000000000000"),
+                                         attributes: { title: "new draft", state: LISTING_STATE_DRAFT, publicData: {} } } } };
+      return dispatch(addMarketplaceEntities(response));
+    }*/
 
     return sdk.ownListings
       .createDraft(data, queryParams)

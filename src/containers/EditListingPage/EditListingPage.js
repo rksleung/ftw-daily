@@ -3,6 +3,7 @@ import { bool, func, object, shape, string, oneOf } from 'prop-types';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl } from '../../util/reactIntl';
+import { parse } from '../../util/urlHelpers';
 import { connect } from 'react-redux';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {
@@ -64,6 +65,7 @@ export const EditListingPageComponent = props => {
     getAccountLinkInProgress,
     history,
     intl,
+    location,
     onFetchAvailabilityExceptions,
     onCreateAvailabilityException,
     onDeleteAvailabilityException,
@@ -101,6 +103,14 @@ export const EditListingPageComponent = props => {
 
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
+
+  // eslint-disable-next-line no-unused-vars
+  const { ...searchInURL } = parse(location.search);
+  const newParams = { ...params, search : { ...searchInURL } };
+
+  // urlQueryParams doesn't contain page specific url params
+  // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
+//  const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
 
   if (shouldRedirect) {
     const isPendingApproval =
@@ -180,7 +190,7 @@ export const EditListingPageComponent = props => {
         <EditListingWizard
           id="EditListingWizard"
           className={css.wizard}
-          params={params}
+          params={newParams}
           disabled={disableForm}
           errors={errors}
           fetchInProgress={fetchInProgress}

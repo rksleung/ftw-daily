@@ -89,13 +89,13 @@ const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 const siteTitle = 'ShareHero';
 
 // Twitter handle is needed in meta tags (twitter:site). Start it with '@' character
-const siteTwitterHandle = '@sharetribe';
+const siteTwitterHandle = '@shareHeros';
 
 // Instagram page is used in SEO schema (http://schema.org/Organization)
-const siteInstagramPage = null;
+const siteInstagramPage = 'https://www.instagram.com/roowsi/';
 
 // Facebook page is used in SEO schema (http://schema.org/Organization)
-const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
+const siteFacebookPage = 'https://www.facebook.com/ShareHeros/';
 
 // Facebook counts shares with app or page associated by this id
 // Currently it is unset, but you can read more about fb:app_id from
@@ -179,6 +179,13 @@ const maps = {
   },
 };
 
+const geoLocation = {
+  city: window.geoplugin_city(),
+  country: window.geoplugin_countryName(),
+  latitude: window.geoplugin_latitude(),
+  longitude: window.geoplugin_longitude(),
+};
+
 // NOTE: only expose configuration that should be visible in the
 // client side, don't add any server secrets in this file.
 const config = {
@@ -220,6 +227,7 @@ const config = {
   usingSSL,
   maps,
   custom,
+  geoLocation,
 };
 
 export default config;

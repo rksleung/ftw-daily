@@ -6,9 +6,10 @@ import {
   LISTING_PAGE_PARAM_TYPE_DRAFT,
   LISTING_PAGE_PARAM_TYPE_NEW,
   LISTING_PAGE_PARAM_TYPES,
+  stringify,
 } from '../../util/urlHelpers';
 import { ensureListing } from '../../util/data';
-import { createResourceLocatorString } from '../../util/routes';
+import { createResourceLocatorString  } from '../../util/routes';
 import {
   EditListingAvailabilityPanel,
   EditListingDescriptionPanel,
@@ -17,6 +18,7 @@ import {
   EditListingPhotosPanel,
   EditListingPoliciesPanel,
   EditListingPricingPanel,
+  EditListingTypePanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
@@ -28,9 +30,11 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
+export const TYPE = 'type';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
+  TYPE,
   DESCRIPTION,
   FEATURES,
   POLICY,
@@ -71,6 +75,24 @@ const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, histo
   history.push(to);
 };
 
+const redirectAfter = (listingId, params, tab, marketplaceTabs, history, search) => {
+  const currentPathParams = {
+    ...params,
+    type: params.type,
+//    id: listingId,
+  };
+  const routes = routeConfiguration();
+
+  if (params.type === LISTING_PAGE_PARAM_TYPE_NEW) {
+    const newURIWithSearch = createResourceLocatorString('EditListingPage', routes, currentPathParams, search);
+    history.replace(newURIWithSearch);
+  }
+  // Redirect to next tab
+  const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
+  const to = createResourceLocatorString('EditListingPage', routes, nextPathParams, search);
+  history.push(to);
+};
+
 const EditListingWizardTab = props => {
   const {
     tab,
@@ -94,6 +116,7 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+    categoryType,
   } = props;
 
   const { type } = params;
@@ -122,6 +145,10 @@ const EditListingWizardTab = props => {
         ? updateValuesWithImages
         : { ...updateValuesWithImages, id: currentListing.id };
 
+      if (tab === "type") {
+        //onUpsertListingDraft(tab, upsertValues);
+        return redirectAfter(null, params, tab, marketplaceTabs, history, updateValues);
+      }
       onUpsertListingDraft(tab, upsertValues)
         .then(r => {
           if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
@@ -153,10 +180,26 @@ const EditListingWizardTab = props => {
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,
+      params: params,
+      categoryType: categoryType,
     };
   };
 
   switch (tab) {
+    case TYPE: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewType'
+        : 'EditListingWizard.saveEditType';
+      return (
+        <EditListingTypePanel
+          {...panelProps(TYPE)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
     case DESCRIPTION: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewDescription'

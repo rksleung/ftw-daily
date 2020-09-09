@@ -12,8 +12,10 @@ import {
   LISTING_PAGE_PARAM_TYPE_DRAFT,
   LISTING_PAGE_PARAM_TYPE_NEW,
   LISTING_PAGE_PARAM_TYPES,
+  stringify
 } from '../../util/urlHelpers';
 import { ensureCurrentUser, ensureListing } from '../../util/data';
+import { findParentForSelectOption } from '../../util/search';
 
 import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../../components';
 import { StripeConnectAccountForm } from '../../forms';
@@ -26,19 +28,22 @@ import EditListingWizardTab, {
   LOCATION,
   PRICING,
   PHOTOS,
+  TYPE,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
+const featuresMaybe = config.enableFeatures ? [FEATURES] : [];
 
 // You can reorder these panels.
 // Note 1: You need to change save button translations for new listing flow
 // Note 2: Ensure that draft listing is created after the first panel
 // and listing publishing happens after last panel.
 export const TABS = [
+  TYPE,
   DESCRIPTION,
-  FEATURES,
+  ...featuresMaybe,
   POLICY,
   LOCATION,
   PRICING,
@@ -52,7 +57,7 @@ const MAX_HORIZONTAL_NAV_SCREEN_WIDTH = 1023;
 const STRIPE_ONBOARDING_RETURN_URL_SUCCESS = 'success';
 const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
 
-const tabLabel = (intl, tab) => {
+const tabLabel = (intl, tab, categoryType) => {
   let key = null;
   if (tab === DESCRIPTION) {
     key = 'EditListingWizard.tabLabelDescription';
@@ -68,9 +73,13 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelAvailability';
   } else if (tab === PHOTOS) {
     key = 'EditListingWizard.tabLabelPhotos';
+  } else if (tab === TYPE) {
+    key = 'EditListingWizard.tabLabelType';
   }
 
-  return intl.formatMessage({ id: key });
+  const defaultMesg = intl.formatMessage({ id: key });
+  key = categoryType ? `${key}.${categoryType}` : key;
+  return intl.formatMessage({ id: key, defaultMessage: defaultMesg });
 };
 
 /**
@@ -90,9 +99,12 @@ const tabCompleted = (tab, listing) => {
     title,
     publicData,
   } = listing.attributes;
+  const { categoryType } = listing;
   const images = listing.images;
 
   switch (tab) {
+    case TYPE: 
+      return !!(categoryType);
     case DESCRIPTION:
       return !!(description && title);
     case FEATURES:
@@ -225,14 +237,14 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-   // if (stripeConnected && !requirementsMissing) {
+    if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
-    /*} else {
+    } else {
       this.setState({
         draftId: id,
         showPayoutDetails: true,
       });
-    }*/
+    }
   }
 
   handlePayoutModalClose() {
@@ -285,8 +297,14 @@ class EditListingWizard extends Component {
     const rootClasses = rootClassName || css.root;
     const classes = classNames(rootClasses, className);
     const currentListing = ensureListing(listing);
-    const tabsStatus = tabsActive(isNewListingFlow, currentListing);
 
+    const filterId = "category";
+    const { publicData } = currentListing.attributes;
+    const categoryT = publicData.category ? findParentForSelectOption(filterId, config.custom.filters, publicData.category) : null;
+    const categoryType = params.search && params.search.categoryType ? params.search.categoryType : categoryT;
+    const currentListingWithParams = { ...currentListing, categoryType };
+    const tabsStatus = tabsActive(isNewListingFlow, currentListingWithParams);
+  
     // If selectedTab is not active, redirect to the beginning of wizard
     if (!tabsStatus[selectedTab]) {
       const currentTabIndex = TABS.indexOf(selectedTab);
@@ -314,7 +332,10 @@ class EditListingWizard extends Component {
     }
 
     const tabLink = tab => {
-      return { name: 'EditListingPage', params: { ...params, tab } };
+      const { search } = params;
+      const searchQuery = search ? stringify(search) : "";
+      const includeSearchQuery = searchQuery.length > 0 ? `?${searchQuery}` : '';
+      return { name: 'EditListingPage', params: { ...params, tab }, to: { search: includeSearchQuery } };
     };
 
     const formDisabled = getAccountLinkInProgress;
@@ -379,7 +400,7 @@ class EditListingWizard extends Component {
                 {...rest}
                 key={tab}
                 tabId={`${id}_${tab}`}
-                tabLabel={tabLabel(intl, tab)}
+                tabLabel={tabLabel(intl, tab, categoryType)}
                 tabLinkProps={tabLink(tab)}
                 selected={selectedTab === tab}
                 disabled={isNewListingFlow && !tabsStatus[tab]}
@@ -392,6 +413,7 @@ class EditListingWizard extends Component {
                 handleCreateFlowTabScrolling={this.handleCreateFlowTabScrolling}
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
+                categoryType={categoryType}
               />
             );
           })}
