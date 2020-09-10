@@ -58,6 +58,8 @@ const defaultDirectives = {
     'stats.g.doubleclick.net',
 
     '*.stripe.com',
+
+    'www.geoplugin.net',
   ],
   scriptSrc: [
     self,
@@ -92,8 +94,8 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // https://content-security-policy.com/
 
   // Example: extend default img directive with custom domain
-  const { scriptSrc = [self] } = defaultDirectives;
-  scriptSrc.append('www.geoplugin.net');
+  //const { imgSrc = [self] } = defaultDirectives;
+  //imgSrc.append('www.geoplugin.net');
 
   const customDirectives = {
     // Example: Add custom directive override
