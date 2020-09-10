@@ -92,15 +92,12 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // https://content-security-policy.com/
 
   // Example: extend default img directive with custom domain
-  // const { imgSrc = [self] } = defaultDirectives;
-  // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
+  const { scriptSrc = [self] } = defaultDirectives;
+  scriptSrc.append('www.geoplugin.net');
 
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
-    scriptSrc: [
-      'www.geoplugin.net'
-    ]
   };
 
   // ================ END CUSTOM CSP URLs ================ //
