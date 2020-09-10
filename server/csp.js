@@ -58,8 +58,6 @@ const defaultDirectives = {
     'stats.g.doubleclick.net',
 
     '*.stripe.com',
-
-    'www.geoplugin.net',
   ],
   scriptSrc: [
     self,
@@ -70,7 +68,7 @@ const defaultDirectives = {
     'api.mapbox.com',
     '*.google-analytics.com',
     'js.stripe.com',
-    'www.geoplugin.net',
+    'http://www.geoplugin.net',
   ],
   styleSrc: [self, unsafeInline, 'fonts.googleapis.com', 'api.mapbox.com'],
 };
