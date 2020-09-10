@@ -70,6 +70,7 @@ const defaultDirectives = {
     'api.mapbox.com',
     '*.google-analytics.com',
     'js.stripe.com',
+    'www.geoplugin.net',
   ],
   styleSrc: [self, unsafeInline, 'fonts.googleapis.com', 'api.mapbox.com'],
 };
