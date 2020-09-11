@@ -164,7 +164,7 @@ const routeConfiguration = () => {
       component: RedirectToLandingPage,
     },
     {
-      path: '/:username',
+      path: '/n/:username',
       name: 'ProfilePage',
       component: props => <ProfilePage {...props} />,
       loadData: ProfilePage.loadUsernameData,
